@@ -1,13 +1,17 @@
 import requests
 import json
+import os
 from requests.auth import HTTPBasicAuth
+
+from dotenv import load_dotenv
+load_dotenv() # Take environment variables from .env
 
 # =========================
 # CONFLUENCE Cloud version
 # =========================
-COMPANYID = "mycompany"
-ADMIN_USRNAME = "<your_username>"
-ADMIN_USRPWD = "<your_personal_token>"
+COMPANYID = os.getenv('CLOUD_COMPANY_ID')
+ADMIN_USRNAME = os.getenv('CLOUD_ADMIN_USRNAME')
+ADMIN_USRPWD = os.getenv('CLOUD_ADMIN_USRPWD')
 
 CONFLUENCE_CLOUD_BASE_URL = f"https://{COMPANYID}.atlassian.net/"
 
