@@ -3,13 +3,15 @@ import json
 from requests.auth import HTTPBasicAuth
 import getpass
 import urllib3
+import os
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # ==========================
 # CONFLUENCE Server version
 # ==========================
-CONFLUENCE_BASE_URL = "<your_confluence_server_url>"
-ADMIN_USRNAME = "<admin_username>"
+CONFLUENCE_BASE_URL = os.getenv('SERVER_CONFLUENCE_BASE_URL')
+ADMIN_USRNAME = os.getenv('SERVER_ADMIN_USRNAME')
 ADMIN_USRPWD=getpass.getpass(f'Enter pasword for {ADMIN_USRNAME}: ')
 
 def getAllSpacesIds():
@@ -33,7 +35,7 @@ def getAllSpacesIds():
     allSpaces = json.loads(response.text)
     for space in allSpaces['results']:
         spaceKey = space['key']
-        if spaceKey.startswith("~"): continue # Ignore Personal spaces
+        if not spaceKey.startswith("~"): continue # Ignore NON Personal spaces
         spaceIdList.append(spaceKey)
 
     return spaceIdList
